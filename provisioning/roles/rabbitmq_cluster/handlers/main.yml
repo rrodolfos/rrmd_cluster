@@ -1,0 +1,11 @@
+- name: Waiting for rabbitmq nodes to be ready
+  wait_for:
+    host: "{{ rabbitmq_cluster_host_ip }}"
+    port: 8081
+    delay: 30
+
+- name: Creating rabbitmq cluster
+  shell: |
+    docker exec -t rabbitmq1 bash -c 'rabbitmqctl stop_app;rabbitmqctl reset;rabbitmqctl join_cluster rabbit@rabbitmq0;rabbitmqctl start_app;'
+    docker exec -t rabbitmq2 bash -c 'rabbitmqctl stop_app;rabbitmqctl reset;rabbitmqctl join_cluster rabbit@rabbitmq0;rabbitmqctl start_app;'
+

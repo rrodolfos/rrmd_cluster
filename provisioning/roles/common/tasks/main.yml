@@ -1,0 +1,12 @@
+- name: '[common role] Installing common packages'
+  apt:
+    pkg:
+    - vim
+    - htop
+    - mc
+    - screen
+    - python-apt
+    - aptitude
+    state: present
+    update_cache: yes
+

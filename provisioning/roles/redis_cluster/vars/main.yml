@@ -1,0 +1,4 @@
+---
+redis_cluster_cfg_path: /opt/redis_cluster/
+redis_cluster_host_ip: "{{ ansible_facts['eth1']['ipv4']['address'] }}"
+

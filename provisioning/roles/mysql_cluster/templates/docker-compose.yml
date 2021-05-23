@@ -1,0 +1,37 @@
+version: '3'
+services:
+  mysqlso:
+    environment:
+      - MYSQL_ROOT_PASSWORD={{ mysql_cluster_mysql_root_password }}
+    image: mysql:8.0.25
+    command: --default-authentication-plugin=mysql_native_password
+    container_name: mysqlso
+    restart: always
+    networks:
+      - mysql
+    ports:
+      - 3306:3306
+      - 33060:33060
+    volumes:
+      - "{{ mysql_cluster_cfg_path }}mysqlso_conf.d:/etc/mysql/conf.d"
+      - mysqlso_data:/var/lib/mysql
+  mysqlre:
+    environment:
+      - MYSQL_ROOT_PASSWORD={{ mysql_cluster_mysql_root_password }}
+    image: mysql:8.0.25
+    command: --default-authentication-plugin=mysql_native_password
+    container_name: mysqlre
+    restart: always
+    networks:
+      - mysql
+    ports:
+      - 3307:3306
+      - 33070:33060
+    volumes:
+      - "{{ mysql_cluster_cfg_path }}mysqlre_conf.d:/etc/mysql/conf.d"
+      - mysqlre_data:/var/lib/mysql
+networks:
+  mysql:
+volumes:
+  mysqlso_data:
+  mysqlre_data:

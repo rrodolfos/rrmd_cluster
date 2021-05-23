@@ -1,0 +1,12 @@
+---
+- hosts: all
+  become: true
+  roles:
+  - common
+  - docker
+
+- hosts: rabbitmq.cluster
+  become: true
+  roles:
+  - rabbitmq_cluster
+

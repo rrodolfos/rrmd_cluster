@@ -1,0 +1,6 @@
+---
+mysql_cluster_mysql_root_password: root
+mysql_cluster_mysql_replica_password: mysqlre
+mysql_cluster_cfg_path: /opt/mysql_cluster/
+mysql_cluster_host_ip: "{{ ansible_facts['eth1']['ipv4']['address'] }}"
+

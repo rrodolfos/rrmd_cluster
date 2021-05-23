@@ -1,0 +1,7 @@
+---
+rabbitmq_cluster_default_user: rabbitmq
+rabbitmq_cluster_default_pass: rabbitmq
+rabbitmq_cluster_erlang_cookie: rabbitmq
+rabbitmq_cluster_cfg_path: /opt/rabbitmq_cluster/
+rabbitmq_cluster_host_ip: "{{ ansible_facts['eth1']['ipv4']['address'] }}"
+

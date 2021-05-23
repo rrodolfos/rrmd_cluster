@@ -1,0 +1,17 @@
+- name: 'Installing redis-tools'
+  apt:
+    pkg:
+    - redis-tools
+    state: present
+    update_cache: yes
+
+- name: Waiting for redis nodes to be ready
+  wait_for:
+    host: "{{ redis_cluster_host_ip }}"
+    port: 7005
+    delay: 30
+
+- name: Creating redis cluster master/replica
+  shell: |
+    echo 'yes' | redis-cli --cluster create "{{ redis_cluster_host_ip }}":7000 "{{ redis_cluster_host_ip }}":7001 "{{ redis_cluster_host_ip }}":7002 "{{ redis_cluster_host_ip }}":7003 "{{ redis_cluster_host_ip }}":7004 "{{ redis_cluster_host_ip }}":7005 --cluster-replicas 1
+

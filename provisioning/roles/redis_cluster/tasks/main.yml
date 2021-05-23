@@ -1,0 +1,47 @@
+- name: '[redis_cluster role] Copying docker-compose.yml'
+  template:
+    src: docker-compose.yml
+    dest: "{{ redis_cluster_cfg_path }}"
+    owner: root
+    group: root
+    mode: 0644
+
+- name: '[redis_cluster role] Copying redis-7000 node redis.conf'
+  copy:
+    src: "7000"
+    dest: "{{ redis_cluster_cfg_path }}"
+
+- name: '[redis_cluster role] Copying redis-7001 node redis.conf'
+  copy:
+    src: "7001"
+    dest: "{{ redis_cluster_cfg_path }}"
+
+- name: '[redis_cluster role] Copying redis-7002 node redis.conf'
+  copy:
+    src: "7002"
+    dest: "{{ redis_cluster_cfg_path }}"
+
+- name: '[redis_cluster role] Copying redis-7003 node redis.conf'
+  copy:
+    src: "7003"
+    dest: "{{ redis_cluster_cfg_path }}"
+
+- name: '[redis_cluster role] Copying redis-7004 node redis.conf'
+  copy:
+    src: "7004"
+    dest: "{{ redis_cluster_cfg_path }}"
+
+- name: '[redis_cluster role] Copying redis-7005 node redis.conf'
+  copy:
+    src: "7005"
+    dest: "{{ redis_cluster_cfg_path }}"
+
+- name: '[redis_cluster role] Starting docker_compose redis nodes'
+  community.docker.docker_compose:
+    project_src: "{{ redis_cluster_cfg_path }}"
+    state: present
+  notify:
+    - Installing redis-tools
+    - Waiting for redis nodes to be ready
+    - Creating redis cluster master/replica
+

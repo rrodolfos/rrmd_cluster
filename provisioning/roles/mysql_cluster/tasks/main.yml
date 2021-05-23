@@ -1,0 +1,29 @@
+- name: '[mysql_cluster role] Copying docker-compose.yml'
+  template:
+    src: docker-compose.yml
+    dest: "{{ mysql_cluster_cfg_path }}"
+    owner: root
+    group: root
+    mode: 0644
+
+- name: '[mysql_cluster role] Copying mysql source config conf.d'
+  copy:
+    src: mysqlso_conf.d
+    dest: "{{ mysql_cluster_cfg_path }}"
+
+- name: '[mysql_cluster role] Copying mysql replica config conf.d'
+  copy:
+    src: mysqlre_conf.d
+    dest: "{{ mysql_cluster_cfg_path }}"
+
+- name: '[mysql_cluster role] Starting docker_compose source -> replica mysql'
+  community.docker.docker_compose:
+    project_src: "{{ mysql_cluster_cfg_path }}"
+    state: present
+  notify:
+    - Installing python3-pymysql Pure-Python MySQL Driver
+    - Waiting for mysql source node to be ready
+    - Creating replica user at mysql source node
+    - Changing source at mysql replica node
+    - Starting mysql replica
+

@@ -1,0 +1,41 @@
+- name: Installing python3-pymysql Pure-Python MySQL Driver
+  apt:
+    pkg:
+    - python3-pymysql
+    state: present
+    update_cache: yes
+
+- name: Waiting for mysql source node to be ready
+  wait_for:
+    host: "{{ mysql_cluster_host_ip }}"
+    port: 3306
+    search_regex: mysql_native_password
+    delay: 60
+    connect_timeout: 5
+
+- name: Creating replica user at mysql source node
+  community.mysql.mysql_user:
+    name: mysqlre
+    host: '%'
+    password: "{{ mysql_cluster_mysql_replica_password }}"
+    priv: '*.*:REPLICATION SLAVE'
+    login_password: "{{ mysql_cluster_mysql_root_password }}"
+    state: present
+
+- name: Changing source at mysql replica node
+  community.mysql.mysql_replication:
+    mode: changeprimary
+    primary_host: mysqlso
+    primary_port: 3306
+    primary_user: mysqlre
+    primary_password: "{{ mysql_cluster_mysql_replica_password }}"
+    primary_auto_position: yes
+    login_port: 3307
+    login_password: "{{ mysql_cluster_mysql_root_password }}"
+
+- name: Starting mysql replica
+  community.mysql.mysql_replication:
+    mode: startreplica
+    login_port: 3307
+    login_password: "{{ mysql_cluster_mysql_root_password }}"
+

@@ -1,0 +1,16 @@
+- name: '[rabbitmq_cluster role] Copying docker-compose.yml'
+  template:
+    src: docker-compose.yml
+    dest: "{{ rabbitmq_cluster_cfg_path }}"
+    owner: root
+    group: root
+    mode: 0644
+
+- name: '[rabbitmq_cluster role] Starting docker_compose rabbitmq nodes'
+  community.docker.docker_compose:
+    project_src: "{{ rabbitmq_cluster_cfg_path }}"
+    state: present
+  notify:
+    - Waiting for rabbitmq nodes to be ready
+    - Creating rabbitmq cluster
+

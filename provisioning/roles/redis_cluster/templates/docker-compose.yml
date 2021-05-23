@@ -1,0 +1,75 @@
+version: '3'
+services:
+  redis-7000:
+    image: redis:6.2.3
+    command: ["redis-server", "/usr/local/etc/redis/redis.conf"]
+    container_name: redis-7000
+    restart: always
+    network_mode: host
+    ports:
+      - 7000:7000
+    volumes:
+      - "{{ redis_cluster_cfg_path }}7000/redis.conf:/usr/local/etc/redis/redis.conf"
+      - redis-7000:/data
+  redis-7001:
+    image: redis:6.2.3
+    command: ["redis-server", "/usr/local/etc/redis/redis.conf"]
+    container_name: redis-7001
+    restart: always
+    network_mode: host
+    ports:
+      - 7001:7001
+    volumes:
+      - "{{ redis_cluster_cfg_path }}7001/redis.conf:/usr/local/etc/redis/redis.conf"
+      - redis-7001:/data
+  redis-7002:
+    image: redis:6.2.3
+    command: ["redis-server", "/usr/local/etc/redis/redis.conf"]
+    container_name: redis-7002
+    restart: always
+    network_mode: host
+    ports:
+      - 7002:7002
+    volumes:
+      - "{{ redis_cluster_cfg_path }}7002/redis.conf:/usr/local/etc/redis/redis.conf"
+      - redis-7002:/data
+  redis-7003:
+    image: redis:6.2.3
+    command: ["redis-server", "/usr/local/etc/redis/redis.conf"]
+    container_name: redis-7003
+    restart: always
+    network_mode: host
+    ports:
+      - 7003:7003
+    volumes:
+      - "{{ redis_cluster_cfg_path }}7003/redis.conf:/usr/local/etc/redis/redis.conf"
+      - redis-7003:/data
+  redis-7004:
+    image: redis:6.2.3
+    command: ["redis-server", "/usr/local/etc/redis/redis.conf"]
+    container_name: redis-7004
+    restart: always
+    network_mode: host
+    ports:
+      - 7004:7004
+    volumes:
+      - "{{ redis_cluster_cfg_path }}7004/redis.conf:/usr/local/etc/redis/redis.conf"
+      - redis-7004:/data
+  redis-7005:
+    image: redis:6.2.3
+    command: ["redis-server", "/usr/local/etc/redis/redis.conf"]
+    container_name: redis-7005
+    restart: always
+    network_mode: host
+    ports:
+      - 7005:7005
+    volumes:
+      - "{{ redis_cluster_cfg_path }}7005/redis.conf:/usr/local/etc/redis/redis.conf"
+      - redis-7005:/data
+volumes:
+  redis-7000:
+  redis-7001:
+  redis-7002:
+  redis-7003:
+  redis-7004:
+  redis-7005:

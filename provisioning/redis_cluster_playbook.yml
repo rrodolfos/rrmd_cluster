@@ -1,0 +1,12 @@
+---
+- hosts: all
+  become: true
+  roles:
+  - common
+  - docker
+
+- hosts: redis.cluster
+  become: true
+  roles:
+  - redis_cluster
+

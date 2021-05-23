@@ -1,0 +1,18 @@
+- name: Creating systemd docker.service.d directory /etc/systemd/system/docker.service.d
+  file:
+    path: /etc/systemd/system/docker.service.d
+    state: directory
+
+- name: Setting Docker's cgroupdriver to systemd
+  copy:
+    src: daemon.json 
+    dest: /etc/docker/daemon.json
+    owner: root
+    group: root
+    mode: '0644'
+
+- name: Restarting docker.io
+  systemd:
+    state: restarted
+    daemon_reload: yes
+    name: docker
